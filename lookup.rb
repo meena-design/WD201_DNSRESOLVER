@@ -41,6 +41,7 @@ end
 def resolve(dns_records,lookup_chain,domain)
   rec=dns_records[domain]
   if !(rec)
+    lookup_chain=[]
     errorMessage = "Error: record not found for "+domain.to_s
     lookup_chain.push(errorMessage)
   elsif rec[:type]=="A"
@@ -48,6 +49,7 @@ def resolve(dns_records,lookup_chain,domain)
   elsif rec[:type]=="CNAME"
     lookup_chain.push(rec[:target])
     resolve(dns_records,lookup_chain,rec[:target])
+
   end
 end
 
